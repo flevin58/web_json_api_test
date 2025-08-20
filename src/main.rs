@@ -1,15 +1,16 @@
 // Practice url: https://jsonplaceholder.typicode.com/users
+#![allow(dead_code)]
 
 use reqwest::{self, Method};
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Deserialize, Debug)]
 struct Geo {
     lat: String,
     lng: String,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Deserialize, Debug)]
 struct Address {
     street: String,
     suite: String,
@@ -18,14 +19,14 @@ struct Address {
     geo: Geo,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Deserialize, Debug)]
 struct Company {
     name: String,
     #[serde(rename = "catchPhrase")]
     catchphrase: String,
     bs: String,
 }
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Deserialize, Debug)]
 struct User {
     id: usize,
     name: String,
