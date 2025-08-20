@@ -1310,8 +1310,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "web_scraping_test"
-version = "0.1.0"
+name = "web_json_api_test"
+version = "1.0.0"
 dependencies = [
  "reqwest",
  "serde",

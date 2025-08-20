@@ -1,7 +1,7 @@
 // Practice url: https://jsonplaceholder.typicode.com/users
 #![allow(dead_code)]
 
-use reqwest::{self, Method};
+use reqwest::{self, Method, StatusCode};
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
@@ -43,13 +43,21 @@ fn main() {
     let client = reqwest::blocking::Client::new();
     let response = client
         .request(Method::GET, URL)
-        .header(
-            "User-Agent",
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 15_6) Rust-powered",
-        )
+        .header("User-Agent", "RustApp/1.0 (Macintosh; M4 Mac OS X 15_6)")
         .send();
     let body = match response {
-        Ok(resp) => resp.text().unwrap(),
+        Ok(resp) => {
+            if resp.status() != StatusCode::OK {
+                eprintln!("Bad status code {}", resp.status().as_u16());
+                return;
+            }
+            let text = resp.text();
+            if text.is_err() {
+                eprintln!("Bad response text");
+                return;
+            }
+            text.unwrap()
+        }
         Err(_) => {
             eprintln!("Error getting json data from server");
             return;
